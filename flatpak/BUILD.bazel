@@ -1,0 +1,17 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "flatpak",
+    srcs = [
+        "data.go",
+        "plugin.go",
+        "registry.go",
+    ],
+    importpath = "go.fuhry.dev/osquery/flatpak",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_chrisportman_go_gvariant//gvariant",
+        "@com_github_linuxdeepin_go_lib//users/passwd",
+        "@com_github_osquery_osquery_go//plugin/table",
+    ],
+)

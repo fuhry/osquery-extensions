@@ -1,0 +1,16 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "pacman",
+    srcs = [
+        "pacman.go",
+        "typed_columns.go",
+    ],
+    importpath = "go.fuhry.dev/osquery/pacman",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//extcommon",
+        "@com_github_jguer_go_alpm_v2//:go-alpm",
+        "@com_github_osquery_osquery_go//plugin/table",
+    ],
+)

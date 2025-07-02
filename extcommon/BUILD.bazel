@@ -1,0 +1,17 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "extcommon",
+    srcs = [
+        "extcommon.go",
+        "util.go",
+    ],
+    importpath = "go.fuhry.dev/osquery/extcommon",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_gobwas_glob//:glob",
+        "@com_github_hashicorp_golang_lru_v2//:golang-lru",
+        "@com_github_osquery_osquery_go//:osquery-go",
+        "@com_github_osquery_osquery_go//plugin/table",
+    ],
+)

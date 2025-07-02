@@ -1,0 +1,18 @@
+load("@rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "flatpak_lib",
+    srcs = ["main.go"],
+    importpath = "go.fuhry.dev/osquery/flatpak/cmd/flatpak",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//extcommon",
+        "//flatpak",
+    ],
+)
+
+go_binary(
+    name = "flatpak",
+    embed = [":flatpak_lib"],
+    visibility = ["//visibility:public"],
+)
