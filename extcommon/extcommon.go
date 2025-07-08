@@ -4,6 +4,8 @@ import (
 	"context"
 	"flag"
 	"log"
+	"strconv"
+	"time"
 
 	"github.com/osquery/osquery-go"
 	"github.com/osquery/osquery-go/plugin/table"
@@ -20,8 +22,28 @@ func Main(name string, s SchemaFunc, g GenerateFunc) {
 	MainMulti(name, Tables{name: {s, g}})
 }
 
+var Verbose *bool
+var Timeout, Interval time.Duration
+
+func durationParser(out *time.Duration) func(string) error {
+	return func(v string) error {
+		if i, e := strconv.Atoi(v); e == nil {
+			*out = time.Duration(i) * time.Second
+			return nil
+		}
+		t, err := time.ParseDuration(v)
+		if err == nil {
+			*out = t
+		}
+		return err
+	}
+}
+
 func MainMulti(pluginName string, t Tables) {
 	socket := flag.String("socket", "/opt/fleet-orbit/orbit-osquery.em", "path to osquery extensions socket")
+	Verbose = flag.Bool("verbose", false, "enable extra debug logging")
+	flag.Func("timeout", "timeout for operations and queries", durationParser(&Timeout))
+	flag.Func("interval", "interval for operations and queries", durationParser(&Interval))
 	flag.Parse()
 
 	if *socket == "" {
