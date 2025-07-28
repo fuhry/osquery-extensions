@@ -1,18 +1,18 @@
 load("@rules_go//go:def.bzl", "go_binary", "go_library")
 
 go_library(
-    name = "pacman_lib",
+    name = "x509_certificates_lib",
     srcs = ["main.go"],
-    importpath = "go.fuhry.dev/osquery/cmd/pacman",
+    importpath = "go.fuhry.dev/osquery/cmd/x509_certificates",
     visibility = ["//visibility:private"],
     deps = [
         "//extcommon",
-        "//pacman",
+        "//x509_certificates",
     ],
 )
 
 go_binary(
-    name = "pacman",
-    embed = [":pacman_lib"],
+    name = "x509_certificates",
+    embed = [":x509_certificates_lib"],
     visibility = ["//visibility:public"],
 )

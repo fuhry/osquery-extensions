@@ -1,0 +1,17 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "x509_certificates",
+    srcs = ["plugin.go"],
+    importpath = "go.fuhry.dev/osquery/x509_certificates",
+    visibility = ["//visibility:public"],
+    deps = ["@com_github_osquery_osquery_go//plugin/table"],
+)
+
+go_test(
+    name = "x509_certificates_test",
+    srcs = ["plugin_test.go"],
+    data = glob(["testdata/**"]),
+    embed = [":x509_certificates"],
+    deps = ["@com_github_stretchr_testify//assert"],
+)
